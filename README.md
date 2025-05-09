@@ -21,6 +21,7 @@ gerenciador-de-tarefas/
 ├── assets/                # Arquivos públicos como imagens e fontes
 ├── config/                # Arquivos de configuração
 ├── controllers/           # Lógica de controle das requisições
+├── documentos/            # Documentação adicional
 ├── models/                # Definição de modelos de dados
 ├── routes/                # Definição das rotas do sistema
 ├── services/              # Serviços auxiliares do sistema
@@ -28,12 +29,12 @@ gerenciador-de-tarefas/
 ├── styles/                # Arquivos CSS públicos
 ├── tests/                 # Arquivos de testes unitários
 ├── .gitignore             # Arquivo para ignorar arquivos no Git
-├── .env.example           # Arquivo de exemplo para variáveis de ambiente
+├── .env.example           # Arquivo de exemplo das variáveis ambiente
 ├── jest.config.js         # Arquivo de configuração do Jest
 ├── package-lock.json      # Gerenciador de dependências do Node.js
 ├── package.json           # Gerenciador de dependências do Node.js
 ├── readme.md              # Documentação do projeto (Markdown)
-├── server.js              # Arquivo principal que inicializa o servidor
+├── server.js              # Arquivo principal do servidor
 └── rest.http              # Teste de endpoints (opcional)
 ```
 <h2>Como Rodar o Projeto Localmente</h2>
