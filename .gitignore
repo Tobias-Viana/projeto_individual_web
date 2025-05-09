@@ -1,4 +1,4 @@
 node_modules/
 .env
 coverage/
-*lock.json
+package-lock.json
