@@ -2,65 +2,100 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Documentação da API</title>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
       max-width: 800px;
       margin: 2rem auto;
-      line-height: 1.6
+      line-height: 1.6;
     }
 
     code {
       background: #f4f4f4;
       padding: 2px 4px;
-      border-radius: 3px
+      border-radius: 3px;
     }
 
     h2 {
-      margin-top: 2.2rem
+      margin-top: 2.2rem;
     }
   </style>
 </head>
 
 <body>
-  <h1>Mini API Node com SQLite</h1>
+  <h1>Documentação da API Node.js - Users, Tasks e Categories</h1>
 
-  <p>Esta aplicação expõe dois conjuntos de endpoints REST em <code>/api/users</code> e <code>/api/orders</code>. Todos
-    aceitam e devolvem JSON.</p>
+  <p>Esta API expõe endpoints REST para gerenciar usuários, tarefas e categorias. Todos aceitam e retornam JSON.</p>
 
   <h2>1. Users</h2>
   <ul>
-    <li><strong>GET /api/users</strong> – lista todos os usuários.</li>
-    <li><strong>POST /api/users</strong> – cria usuário.<br>
-      Exemplo de corpo: <code>{"name":"Ana","email":"ana@exemplo.com"}</code></li>
-    <li><strong>GET /api/users/:id</strong> – detalhe do usuário.</li>
-    <li><strong>PUT /api/users/:id</strong> – atualiza usuário.</li>
-    <li><strong>DELETE /api/users/:id</strong> – remove usuário.</li>
-    <li><strong>GET /api/users-totals</strong> – join que devolve cada usuário com a soma de preços de seus pedidos.
+    <li><strong>GET /users</strong> – lista todos os usuários.</li>
+    <li><strong>POST /users</strong> – cria um usuário.<br />
+      Exemplo de corpo:<br />
+      <code>{
+  "name": "Ana",
+  "email": "ana@exemplo.com",
+  "password": "123456"
+}</code>
+    </li>
+    <li><strong>GET /users/:id</strong> – detalhes de um usuário pelo ID.</li>
+    <li><strong>PUT /users/:id</strong> – atualiza nome e email do usuário.</li>
+    <li><strong>DELETE /users/:id</strong> – remove usuário.</li>
+    <li><strong>POST /login</strong> – login do usuário.<br />
+      Exemplo de corpo:<br />
+      <code>{
+  "email": "ana@exemplo.com",
+  "password": "123456"
+}</code>
     </li>
   </ul>
 
-  <h2>2. Orders</h2>
+  <h2>2. Tasks</h2>
   <ul>
-    <li><strong>GET /api/orders</strong> – lista todos os pedidos.</li>
-    <li><strong>POST /api/orders</strong> – cria pedido.<br>
-      Exemplo: <code>{"user_id":1,"product":"Livro","price":49.90}</code></li>
-    <li><strong>GET /api/orders/:id</strong> – detalhe do pedido.</li>
-    <li><strong>PUT /api/orders/:id</strong> – atualiza pedido.</li>
-    <li><strong>DELETE /api/orders/:id</strong> – remove pedido.</li>
-    <li><strong>GET /api/orders-with-user</strong> – join que traz cada pedido com nome e e-mail do usuário associado.
+    <li><strong>GET /task</strong> – lista todas as tarefas.</li>
+    <li><strong>POST /task</strong> – cria uma tarefa.<br />
+      Exemplo de corpo:<br />
+      <code>{
+  "user_id": 1,
+  "title": "Estudar Node.js",
+  "description": "Estudar os módulos e rotas",
+  "date_creation": "2025-05-23",
+  "date_delivery": "2025-05-30",
+  "status": "pendente"
+}</code>
     </li>
+    <li><strong>PUT /task/:id</strong> – atualiza título, descrição e status da tarefa.</li>
+    <li><strong>DELETE /task/:id</strong> – exclui tarefa.</li>
+  </ul>
+
+  <h2>3. Categories</h2>
+  <ul>
+    <li><strong>GET /category</strong> – lista todas as categorias.</li>
+    <li><strong>POST /category</strong> – cria uma categoria.<br />
+      Exemplo de corpo:<br />
+      <code>{
+  "name": "Trabalho",
+  "description": "Tarefas relacionadas ao trabalho"
+}</code>
+    </li>
+    <li><strong>GET /category/:id</strong> – detalhes da categoria pelo ID.</li>
+    <li><strong>PUT /category/:id</strong> – atualiza nome e descrição da categoria.</li>
+    <li><strong>DELETE /category/:id</strong> – exclui categoria.</li>
   </ul>
 
   <h2>Exemplos de uso via <em>curl</em></h2>
   <pre>
-curl -X POST http://localhost:3000/api/users \
+curl -X POST http://localhost:3000/users \
      -H "Content-Type: application/json" \
-     -d '{"name":"Ana","email":"ana@exemplo.com"}'
+     -d '{"name":"Ana","email":"ana@exemplo.com","password":"123456"}'
 
-curl http://localhost:3000/api/users-totals
+curl http://localhost:3000/task
+
+curl -X POST http://localhost:3000/category \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Trabalho","description":"Tarefas relacionadas ao trabalho"}'
   </pre>
 </body>
 
