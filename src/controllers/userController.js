@@ -1,95 +1,46 @@
-const userService = require('../services/userService.js');
-const db = require('../config/db.js');
+const svc = require('../services/userService');
 
-// Pega todos os usuários (sem senha)
-const getAllUsers = async (req, res) => {
-  try {
-    const users = await userService.getAllUsers();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Pega usuário por ID (sem senha)
-const getUserById = async (req, res) => {
-  try {
-    const user = await userService.getUserById(req.params.id);
-    if (user) {
-      res.status(200).json(user);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Criar usuário com senha
-const createUser = async (req, res) => {
+exports.create = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!password) {
-      return res.status(400).json({ error: 'Senha é obrigatória' });
-    }
-    const newUser = await userService.createUser(name, email, password);
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (!password) throw new Error("Senha é obrigatória");
+    const user = await svc.createUser(name, email, password);
+    res.status(201).json(user);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
   }
 };
 
-// Atualizar usuário (sem senha)
-const updateUser = async (req, res) => {
+exports.list = async (_, res) => res.json(await svc.getAllUsers());
+
+exports.detail = async (req, res) => {
+  const user = await svc.getUserById(req.params.id);
+  user ? res.json(user) : res.sendStatus(404);
+};
+
+exports.update = async (req, res) => {
   try {
     const { name, email } = req.body;
-    const updatedUser = await userService.updateUser(req.params.id, name, email);
-    if (updatedUser) {
-      res.status(200).json(updatedUser);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const updated = await svc.updateUser(req.params.id, name, email);
+    updated ? res.json(updated) : res.sendStatus(404);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
   }
 };
 
-// Deletar usuário
-const deleteUser = async (req, res) => {
-  try {
-    const deletedUser = await userService.deleteUser(req.params.id);
-    if (deletedUser) {
-      res.status(200).json(deletedUser);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+exports.remove = async (req, res) => {
+  const deleted = await svc.deleteUser(req.params.id);
+  deleted ? res.sendStatus(204) : res.sendStatus(404);
 };
 
-// Login (verificar email e senha)
-const loginUser = async (req, res) => {
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email e senha são obrigatórios' });
-    }
-    const user = await userService.verifyUserPassword(email, password);
-    if (!user) {
-      return res.status(401).json({ error: 'Email ou senha inválidos' });
-    }
+    if (!email || !password) throw new Error('Email e senha são obrigatórios');
+    const user = await svc.verifyUserPassword(email, password);
+    if (!user) return res.status(401).json({ error: 'Email ou senha inválidos' });
     res.status(200).json({ message: 'Login realizado com sucesso', user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
   }
-};
-
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
-  loginUser,
 };

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Documentação da API</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      line-height: 1.6
+    }
+
+    code {
+      background: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 3px
+    }
+
+    h2 {
+      margin-top: 2.2rem
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Mini API Node com SQLite</h1>
+
+  <p>Esta aplicação expõe dois conjuntos de endpoints REST em <code>/api/users</code> e <code>/api/orders</code>. Todos
+    aceitam e devolvem JSON.</p>
+
+  <h2>1. Users</h2>
+  <ul>
+    <li><strong>GET /api/users</strong> – lista todos os usuários.</li>
+    <li><strong>POST /api/users</strong> – cria usuário.<br>
+      Exemplo de corpo: <code>{"name":"Ana","email":"ana@exemplo.com"}</code></li>
+    <li><strong>GET /api/users/:id</strong> – detalhe do usuário.</li>
+    <li><strong>PUT /api/users/:id</strong> – atualiza usuário.</li>
+    <li><strong>DELETE /api/users/:id</strong> – remove usuário.</li>
+    <li><strong>GET /api/users-totals</strong> – join que devolve cada usuário com a soma de preços de seus pedidos.
+    </li>
+  </ul>
+
+  <h2>2. Orders</h2>
+  <ul>
+    <li><strong>GET /api/orders</strong> – lista todos os pedidos.</li>
+    <li><strong>POST /api/orders</strong> – cria pedido.<br>
+      Exemplo: <code>{"user_id":1,"product":"Livro","price":49.90}</code></li>
+    <li><strong>GET /api/orders/:id</strong> – detalhe do pedido.</li>
+    <li><strong>PUT /api/orders/:id</strong> – atualiza pedido.</li>
+    <li><strong>DELETE /api/orders/:id</strong> – remove pedido.</li>
+    <li><strong>GET /api/orders-with-user</strong> – join que traz cada pedido com nome e e-mail do usuário associado.
+    </li>
+  </ul>
+
+  <h2>Exemplos de uso via <em>curl</em></h2>
+  <pre>
+curl -X POST http://localhost:3000/api/users \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Ana","email":"ana@exemplo.com"}'
+
+curl http://localhost:3000/api/users-totals
+  </pre>
+</body>
+
+</html>

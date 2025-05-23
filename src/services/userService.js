@@ -1,53 +1,71 @@
-const db = require('../config/db');
 const bcrypt = require('bcrypt');
+const userRepo = require('../repositories/userRepository');
 
 const SALT_ROUNDS = 10;
+const DOMINIOS_PERMITIDOS = ['empresa.com.br', 'exemplo.com'];
+const NOMES_RESERVADOS = new Set(['admin', 'root', 'system']);
 
-async function createUser(name, email, password) {
-  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email';
-  const result = await db.query(sql, [name, email, hashedPassword]);
-  return result.rows[0];
+function validarNome(nome) {
+  if (NOMES_RESERVADOS.has(nome.toLowerCase())) {
+    throw new Error('Nome de usuário reservado.');
+  }
 }
 
-async function getAllUsers() {
-  const result = await db.query('SELECT id, name, email FROM users');
-  return result.rows;
+function validarDominioEmail(email) {
+  const dominio = email.split('@')[1]?.toLowerCase();
+  if (!DOMINIOS_PERMITIDOS.includes(dominio)) {
+    throw new Error(`Domínio de e-mail não permitido: ${dominio}`);
+  }
 }
 
-async function getUserById(id) {
-  const result = await db.query('SELECT id, name, email FROM users WHERE id = $1', [id]);
-  return result.rows[0];
-}
-
-async function updateUser(id, name, email) {
-  const sql = 'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name, email';
-  const result = await db.query(sql, [name, email, id]);
-  return result.rows[0];
-}
-
-async function deleteUser(id) {
-  const user = await getUserById(id);
-  await db.query('DELETE FROM users WHERE id = $1', [id]);
-  return user;
-}
-
-async function verifyUserPassword(email, password) {
-  const result = await db.query('SELECT id, name, email FROM users WHERE email = $1', [email]);
-  const user = result.rows[0];
-  if (!user) return null;
-
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return null;
-
-  return { id: user.id, name: user.name, email: user.email };
+async function validarEmailUnico(email, ignorarId = null) {
+  const user = await userRepo.findByEmail(email);
+  if (user && user.id !== ignorarId) {
+    throw new Error('E-mail já cadastrado.');
+  }
 }
 
 module.exports = {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
-  verifyUserPassword,
+  async create(payload) {
+    validarNome(payload.name);
+    validarDominioEmail(payload.email);
+    await validarEmailUnico(payload.email);
+
+    const hashedPassword = await bcrypt.hash(payload.password, SALT_ROUNDS);
+    payload.password = hashedPassword;
+
+    return userRepo.create(payload);
+  },
+
+  async list() {
+    return userRepo.findAll();
+  },
+
+  async detail(id) {
+    return userRepo.findById(id);
+  },
+
+  async update(id, payload) {
+    if (payload.name) validarNome(payload.name);
+    if (payload.email) {
+      validarDominioEmail(payload.email);
+      await validarEmailUnico(payload.email, id);
+    }
+    return userRepo.update(id, payload);
+  },
+
+  async remove(id) {
+    return userRepo.remove(id);
+  },
+
+  async verifyUserPassword(email, password) {
+    const user = await userRepo.findByEmail(email);
+    if (!user) return null;
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return null;
+
+    // Retorna dados sem senha
+    return { id: user.id, name: user.name, email: user.email };
+  },
 };

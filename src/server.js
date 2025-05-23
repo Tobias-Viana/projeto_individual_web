@@ -1,21 +1,22 @@
-const express = require('express');
+const express = require("express");
+const path = require("path");
 const app = express();
-const PORT = 3000;
 
-// Conexão com o banco de dados
-const db = require('./config/db');
-db.connect()
-  .then(() => console.log('Conectado ao banco de dados!'))
-  .catch(err => console.error('Erro ao conectar ao banco de dados:', err));
-
-// Middleware para processar JSON
 app.use(express.json());
 
-// Rotas
-const routes = require('./routes/index.js');
-app.use('/', routes);
+// rota raiz devolve a página de documentação
+app.get("/", (_, res) =>
+  res.sendFile(path.join(__dirname, "views", "docs.html"))
+);
 
-// Inicializa o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+// registra rotas de API
+app.use("/api", require("./routes/userRoutes"));
+app.use("/api", require("./routes/taskRoutes"));
+app.use("/api", require("./routes/categoryRoutes"));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>
+  console.log(`Servidor escutando em http://localhost:${PORT}`)
+);
+
+module.exports = app;

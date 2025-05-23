@@ -3,10 +3,10 @@ const c = require('../controllers/categoryController');
 
 const r = Router();
 
-r.get('/', c.getAllCategories);         
-r.get('/:id', c.getCategoryById);      
-r.post('/', c.createCategory);         
-r.put('/:id', c.updateCategory);       
-r.delete('/:id', c.deleteCategory);   
+r.post('/category', c.createCategory);
+r.get('/category', c.listCategories);
+r.get('/category/:id', c.getCategoryById);
+r.put('/category/:id', c.updateCategory);
+r.delete('/category/:id', c.deleteCategory);
 
 module.exports = r;

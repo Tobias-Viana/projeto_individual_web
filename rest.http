@@ -1,12 +1,2 @@
 # Teste da rota GET /users
 GET http://localhost:3000/
-
-### Teste da rota users
-POST http://localhost:3000/users
-Content-Type: application/json
-
-{
-  "name": "Tobias",
-  "email": "tobiasviana00@gmail.com",
-  "password": "1234"
-}

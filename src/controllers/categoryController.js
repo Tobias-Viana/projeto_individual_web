@@ -1,77 +1,57 @@
-const categoryService = require('../models/categoryModels.js');
-const db = require('../config/db.js');
+const categoryService = require('../services/categoryService');
+const categoryModel = require('../models/categoryModels');
 
-// Buscar todas as categorias
-const getAllCategories = async (req, res) => {
+exports.createCategory = async (req, res) => {
+  try {
+    const { error, value } = categoryModel.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    const category = await categoryService.createCategory(value.name, value.description);
+    res.status(201).json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.listCategories = async (_, res) => {
   try {
     const categories = await categoryService.getAllCategories();
     res.status(200).json(categories);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Buscar categoria por ID
-const getCategoryById = async (req, res) => {
+exports.getCategoryById = async (req, res) => {
   try {
     const category = await categoryService.getCategoryById(req.params.id);
-    if (category) {
-      res.status(200).json(category);
-    } else {
-      res.status(404).json({ error: 'Categoria não encontrada' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (!category) return res.status(404).json({ message: 'Categoria não encontrada' });
+    res.status(200).json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Criar nova categoria
-const createCategory = async (req, res) => {
+exports.updateCategory = async (req, res) => {
   try {
-    const { name, description } = req.body;
-    if (!name) {
-      return res.status(400).json({ error: 'Nome é obrigatório' });
-    }
-    const newCategory = await categoryService.createCategory(name, description);
-    res.status(201).json(newCategory);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const { error, value } = categoryModel.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    const updated = await categoryService.updateCategory(req.params.id, value.name, value.description);
+    if (!updated) return res.status(404).json({ message: 'Categoria não encontrada' });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Atualizar categoria
-const updateCategory = async (req, res) => {
+exports.deleteCategory = async (req, res) => {
   try {
-    const { name, description } = req.body;
-    const updatedCategory = await categoryService.updateCategory(req.params.id, name, description);
-    if (updatedCategory) {
-      res.status(200).json(updatedCategory);
-    } else {
-      res.status(404).json({ error: 'Categoria não encontrada' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const deleted = await categoryService.deleteCategory(req.params.id);
+    if (!deleted) return res.status(404).json({ message: 'Categoria não encontrada' });
+    res.status(200).json({ message: 'Categoria excluída com sucesso' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-};
-
-// Deletar categoria
-const deleteCategory = async (req, res) => {
-  try {
-    const deletedCategory = await categoryService.deleteCategory(req.params.id);
-    if (deletedCategory) {
-      res.status(200).json(deletedCategory);
-    } else {
-      res.status(404).json({ error: 'Categoria não encontrada' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-module.exports = {
-  getAllCategories,
-  getCategoryById,
-  createCategory,
-  updateCategory,
-  deleteCategory,
 };

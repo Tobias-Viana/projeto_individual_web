@@ -3,11 +3,11 @@ const u = require('../controllers/userController');
 
 const r = Router();
 
-r.get('/', u.getAllUsers);
-r.get('/:id', u.getUserById);
-r.post('/', u.createUser);
-r.put('/:id', u.updateUser);
-r.delete('/:id', u.deleteUser);
-r.post('/login', u.loginUser);
+r.get('/users', u.list);
+r.get('/users/:id', u.detail);
+r.post('/users', u.create);
+r.put('/users/:id', u.update);
+r.delete('/users/:id', u.remove);
+r.post('/login', u.login);
 
 module.exports = r;
