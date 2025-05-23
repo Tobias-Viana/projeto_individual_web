@@ -28,4 +28,4 @@ const runSQLScript = async () => {
   }
 };
 
-runSQLScript();
+runSQLScript(); 
