@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const userRepo = require('../repositories/userRepository');
 
 const SALT_ROUNDS = 10;
-const DOMINIOS_PERMITIDOS = ['empresa.com.br', 'exemplo.com'];
+const DOMINIOS_PERMITIDOS = ['usuario.com', 'exemplo.com'];
 const NOMES_RESERVADOS = new Set(['admin', 'root', 'system']);
 
 function validarNome(nome) {
@@ -19,7 +19,7 @@ function validarDominioEmail(email) {
 }
 
 async function validarEmailUnico(email, ignorarId = null) {
-  const user = await userRepo.findByEmail(email);
+  const user = await userRepo.findByEmailWithPassword(email);
   if (user && user.id !== ignorarId) {
     throw new Error('E-mail já cadastrado.');
   }
@@ -59,13 +59,23 @@ module.exports = {
   },
 
   async verifyUserPassword(email, password) {
-    const user = await userRepo.findByEmail(email);
-    if (!user) return null;
+  if (!password) throw new Error('Senha não informada');
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return null;
+  const user = await userRepo.findByEmailWithPassword(email);
+  if (!user) return null;
 
-    // Retorna dados sem senha
-    return { id: user.id, name: user.name, email: user.email };
-  },
+  if (!user.password) throw new Error('Senha do usuário não encontrada no banco');
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return null;
+
+  return {
+    message: 'Login realizado com sucesso!',
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email
+    }
+  };
+}
 };

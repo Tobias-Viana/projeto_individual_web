@@ -1,2 +1,56 @@
 # Teste da rota GET /users
-GET http://localhost:3000/
+GET http://localhost:3000 HTTP/1.1
+Accept: application/json
+
+### Teste da rota GET /users/:id
+GET http://localhost:3000/api/users/ HTTP/1.1
+
+### Criar novo usuário
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "name": "Tobias", 
+    "email": "tobiasviana@usuario.com", 
+    "password": "123456"
+}
+
+
+### Teste da rota GET /users/:id
+GET http://localhost:3000/api/users/14 HTTP/1.1
+
+### Teste da rota PUT /users/:id
+PUT http://localhost:3000/api/users/:id
+Content-Type: application/json
+
+{
+    "name": "Tobias Viana",
+    "email": "tobiasviana@usuario.com"
+}
+
+### Teste da rota DELETE /users/:id
+DELETE http://localhost:3000/api/users/:id HTTP/1.1
+
+### Teste da rota POST /login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email": "tobiasviana@usuario.com",
+    "password": "123456"
+}
+
+### Teste da rota GET /tasks
+GET http://localhost:3000/api/tasks HTTP/1.1
+
+### Criar nova tarefa
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+    "title": "Estudar Node.js",
+    "description": "Estudar os módulos e rotas",
+    "date_creation": "2025-05-23",
+    "date_delivery": "2025-05-30",
+    "status": "pending"
+}

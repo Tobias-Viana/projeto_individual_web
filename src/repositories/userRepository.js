@@ -46,7 +46,7 @@ module.exports = {
   },
 
   async findByEmailWithPassword(email) {
-    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    const result = await db.query('SELECT id, name, email FROM users WHERE email = $1', [email]);
     return result.rows[0];
   },
 };
