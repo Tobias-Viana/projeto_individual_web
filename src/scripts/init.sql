@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS task (
   description TEXT,
   date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   date_delivery TIMESTAMP NOT NULL,
-  status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'in progress', 'completed')),
+  status VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'em andamento', 'concluída')),
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

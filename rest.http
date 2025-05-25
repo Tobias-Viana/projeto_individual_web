@@ -17,7 +17,7 @@ Content-Type: application/json
 
 
 ### Teste da rota GET /users/:id
-GET http://localhost:3000/api/users/14 HTTP/1.1
+GET http://localhost:3000/api/users/:id HTTP/1.1
 
 ### Teste da rota PUT /users/:id
 PUT http://localhost:3000/api/users/:id
@@ -41,16 +41,60 @@ Content-Type: application/json
 }
 
 ### Teste da rota GET /tasks
-GET http://localhost:3000/api/tasks HTTP/1.1
+GET http://localhost:3000/api/tasks/14 HTTP/1.1
 
 ### Criar nova tarefa
-POST http://localhost:3000/api/tasks
+POST http://localhost:3000/api/tasks/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "title": "Estudar Node.js",
-    "description": "Estudar os módulos e rotas",
-    "date_creation": "2025-05-23",
-    "date_delivery": "2025-05-30",
-    "status": "pending"
+  "user_id": 14,
+  "title": "Minha task teste",
+  "description": "Descrição da task",
+  "date_creation": "2025-05-25",
+  "date_delivery": "2025-05-30",
+  "status": "pendente"
 }
+
+
+### Teste da rota PUT /tasks/:id
+PUT http://localhost:3000/api/tasks/14
+Content-Type: application/json
+
+{
+    "title": "Estudar Node.js Avançado",
+    "description": "Estudar os módulos e rotas avançados",
+    "date_creation": "2025-05-23",
+    "date_delivery": "2025-06-01",
+    "status": "em andamento"
+}
+
+### Teste da rota DELETE /tasks/:id
+DELETE http://localhost:3000/api/tasks/14 HTTP/1.1
+
+### Teste da rota GET /category/:id
+GET http://localhost:3000/api/category/ HTTP/1.1
+
+### Criar nova categoria
+POST http://localhost:3000/api/category 
+Content-Type: application/json
+
+{
+    "name": "Estudos",
+    "description": "Tarefas relacionadas a estudos"
+}
+
+### Teste da rota GET /category/:id
+GET http://localhost:3000/api/category/:id HTTP/1.1
+
+### Teste da rota PUT /category/:id
+PUT http://localhost:3000/api/category/:id
+Content-Type: application/json
+
+{
+    "name": "Estudos Avançados",
+    "description": "Tarefas relacionadas a estudos avançados"
+}
+
+### Teste da rota DELETE /category/:id
+DELETE http://localhost:3000/api/category/2 HTTP/1.1

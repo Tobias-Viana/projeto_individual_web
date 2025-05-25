@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Pega todas as categorias
-const getAllCategories = async () => {
+const listCategories = async () => {
   const result = await db.query('SELECT id, name, description FROM category');
   return result.rows;
 };
@@ -40,7 +40,7 @@ const deleteCategory = async (id) => {
 };
 
 module.exports = {
-  getAllCategories,
+  listCategories,
   getCategoryById,
   createCategory,
   updateCategory,
