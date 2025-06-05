@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Tarefas - Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Gerenciador de Tarefas</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/tasks">Tarefas</a></li>
+          <li><a href="/docs">Documentação</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div id="alert-container"></div>
+    
+    <div class="page-header">
+      <h2>Minhas Tarefas</h2>
+      <a href="/tasks/create" class="btn btn-success">Nova Tarefa</a>
+    </div>
+    
+    <div class="task-list">
+      <% if (tasks && tasks.length > 0) { %>
+        <% tasks.forEach(task => { %>
+          <div id="task-<%= task.id %>" class="card task-card <%= task.status.replace(' ', '-') %>">
+            <div class="task-header">
+              <h3><%= task.title %></h3>
+              <span class="task-status status-<%= task.status.replace(' ', '-') %>"><%= task.status %></span>
+            </div>
+            <p><%= task.description || 'Sem descrição' %></p>
+            <p><strong>Data de entrega:</strong> <%= new Date(task.date_delivery).toLocaleDateString('pt-BR') %></p>
+            <div class="task-actions">
+              <a href="/tasks/edit/<%= task.id %>" class="btn">Editar</a>
+              <button onclick="deleteTask(<%= task.id %>)" class="btn btn-danger">Excluir</button>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>Nenhuma tarefa encontrada.</p>
+      <% } %>
+    </div>
+  </main>
+  
+  <script src="/js/tasks.js"></script>
+</body>
+</html>

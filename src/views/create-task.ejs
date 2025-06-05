@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Tarefa - Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Gerenciador de Tarefas</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/tasks">Tarefas</a></li>
+          <li><a href="/docs">Documentação</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div id="alert-container"></div>
+    
+    <div class="card">
+      <h2>Nova Tarefa</h2>
+      
+      <form id="create-task-form" onsubmit="createTask(event)">
+        <div class="form-group">
+          <label for="title">Título</label>
+          <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">Descrição</label>
+          <textarea id="description" name="description" class="form-control" rows="4"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="date_delivery">Data de Entrega</label>
+          <input type="date" id="date_delivery" name="date_delivery" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="form-control" required>
+            <option value="pendente">Pendente</option>
+            <option value="em andamento">Em andamento</option>
+            <option value="concluída">Concluída</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Criar Tarefa</button>
+          <a href="/tasks" class="btn">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <script src="/js/tasks.js"></script>
+</body>
+</html>

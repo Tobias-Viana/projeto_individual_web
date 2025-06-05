@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Tarefa - Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Gerenciador de Tarefas</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/tasks">Tarefas</a></li>
+          <li><a href="/docs">Documentação</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div id="alert-container"></div>
+    
+    <div class="card">
+      <h2>Editar Tarefa</h2>
+      
+      <form id="edit-task-form" data-task-id="<%= task.id %>" onsubmit="updateTask(event)">
+        <div class="form-group">
+          <label for="title">Título</label>
+          <input type="text" id="title" name="title" class="form-control" value="<%= task.title %>" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">Descrição</label>
+          <textarea id="description" name="description" class="form-control" rows="4"><%= task.description || '' %></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="date_delivery">Data de Entrega</label>
+          <input type="date" id="date_delivery" name="date_delivery" class="form-control" value="<%= new Date(task.date_delivery).toISOString().split('T')[0] %>" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="form-control" required>
+            <option value="pendente" <%= task.status === 'pendente' ? 'selected' : '' %>>Pendente</option>
+            <option value="em andamento" <%= task.status === 'em andamento' ? 'selected' : '' %>>Em andamento</option>
+            <option value="concluída" <%= task.status === 'concluída' ? 'selected' : '' %>>Concluída</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Salvar Alterações</button>
+          <a href="/tasks" class="btn">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <script src="/js/tasks.js"></script>
+</body>
+</html>
