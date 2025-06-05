@@ -6,6 +6,6 @@ module.exports = Joi.object({
   title: Joi.string().min(3).required(),
   description: Joi.string().allow(''),
   date_creation: Joi.date().iso(),
-  date_delivery: Joi.date().iso(),
+  date_delivery: Joi.date().iso().required(),
   status: Joi.string().valid('pendente', 'em andamento', 'concluída').required()
 });

@@ -11,17 +11,16 @@ const createTask = async (user_id, title, description, date_creation, date_deliv
   return result.rows[0];
 };
 
-
 // Listar todas as tasks
 const getAllTasks = async () => {
-  const query = 'SELECT user_id, title, description, date_creation, date_delivery, status FROM task';
+  const query = 'SELECT id, user_id, title, description, date_creation, date_delivery, status FROM task';
   const result = await db.query(query);
   return result.rows;
 };
 
 // Pegar task por id
 const getTaskById = async (id) => {
-  const query = 'SELECT user_id, title, description, date_creation, date_delivery, status FROM task WHERE id = $1';
+  const query = 'SELECT id, user_id, title, description, date_creation, date_delivery, status FROM task WHERE id = $1';
   const result = await db.query(query, [id]);
   return result.rows[0];
 };

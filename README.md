@@ -99,7 +99,7 @@ http://localhost:3000
 npm test
 ```
 8- **Use uma ferramenta como o Postman ou Insomnia para testar os endpoints da API. Você também pode testar diretamente com o arquivo rest.http incluso no projeto. Basta abrir esse arquivo com o VS Code (e a extensão REST Client instalada), e clicar em “Send Request” nos blocos.**
-``` bash
+```bash
 POST /api/users — Criar usuário
 POST /api/login — Fazer login
 POST /api/tasks — Criar nova tarefa

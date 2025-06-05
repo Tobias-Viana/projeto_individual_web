@@ -6,7 +6,7 @@ exports.create = async (req, res) => {
     const { name, email, password } = req.body;
     if (!password) throw new Error("Senha é obrigatória");
     
-    const user = await svc.create({ name, email, password }); // ✅ correto
+    const user = await svc.create({ name, email, password });
     
     res.status(201).json(user);
   } catch (e) {
