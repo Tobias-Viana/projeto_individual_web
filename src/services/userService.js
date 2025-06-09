@@ -19,8 +19,8 @@ function validarDominioEmail(email) {
 }
 
 async function validarEmailUnico(email, ignorarId = null) {
-  const user = await userRepo.findByEmailWithPassword(email);
-  if (user && user.id !== ignorarId) {
+  const users = await userRepo.findByEmailWithPassword(email);
+  if (users && users.id !== ignorarId) {
     throw new Error('E-mail já cadastrado.');
   }
 }
@@ -61,20 +61,20 @@ module.exports = {
   async verifyUserPassword(email, password) {
   if (!password) throw new Error('Senha não informada');
 
-  const user = await userRepo.findByEmailWithPassword(email);
-  if (!user) return null;
+  const users = await userRepo.findByEmailWithPassword(email);
+  if (!users) return null;
 
-  if (!user.password) throw new Error('Senha do usuário não encontrada no banco');
+  if (!users.password) throw new Error('Senha do usuário não encontrada no banco');
 
-  const match = await bcrypt.compare(password, user.password);
+  const match = await bcrypt.compare(password, users.password);
   if (!match) return null;
 
   return {
     message: 'Login realizado com sucesso!',
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email
+    users: {
+      id: users.id,
+      name: users.name,
+      email: users.email
     }
   };
 }

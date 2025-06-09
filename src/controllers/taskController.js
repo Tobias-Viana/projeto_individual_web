@@ -2,8 +2,9 @@ const svc = require('../services/taskService');
 
 exports.create = async (req, res) => {
   try {
-    const { user_id, title, description, date_creation, date_delivery, status } = req.body;
-    const task = await svc.createTask(user_id, title, description, date_creation, date_delivery, status);
+    console.log(req.body);
+    const { users_id, title, description, date_creation, date_delivery, status } = req.body;
+    const task = await svc.createTask(users_id, title, description, date_creation, date_delivery, status);
     res.status(201).json(task);
   } catch (e) {
     res.status(400).json({ error: e.message });

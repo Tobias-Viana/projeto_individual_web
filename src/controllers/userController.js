@@ -6,9 +6,9 @@ exports.create = async (req, res) => {
     const { name, email, password } = req.body;
     if (!password) throw new Error("Senha é obrigatória");
     
-    const user = await svc.create({ name, email, password });
+    const users = await svc.create({ name, email, password });
     
-    res.status(201).json(user);
+    res.status(201).json(users);
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
@@ -18,8 +18,8 @@ exports.create = async (req, res) => {
 exports.list = async (_, res) => res.json(await svc.list());
 
 exports.detail = async (req, res) => {
-  const user = await svc.detail(req.params.id);
-  user ? res.json(user) : res.sendStatus(404);
+  const users = await svc.detail(req.params.id);
+  users ? res.json(users) : res.sendStatus(404);
 };
 
 exports.update = async (req, res) => {
@@ -45,9 +45,9 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) throw new Error('Email e senha são obrigatórios');
-    const user = await svc.verifyUserPassword(email, password);
-    if (!user) return res.status(401).json({ error: 'Email ou senha inválidos' });
-    res.status(200).json({ message: 'Login realizado com sucesso', user });
+    const users = await svc.verifyUserPassword(email, password);
+    if (!users) return res.status(401).json({ error: 'Email ou senha inválidos' });
+    res.status(200).json({ message: 'Login realizado com sucesso', users });
   } catch (e) {
     res.status(400).json({ error: e.message });
   }

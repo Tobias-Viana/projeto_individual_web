@@ -17,10 +17,10 @@ Content-Type: application/json
 
 
 ### Teste da rota GET /users/:id
-GET http://localhost:3000/api/users/:id HTTP/1.1
+GET http://localhost:3000/api/users/ HTTP/1.1
 
 ### Teste da rota PUT /users/:id
-PUT http://localhost:3000/api/users/:id
+PUT http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ### Teste da rota DELETE /users/:id
-DELETE http://localhost:3000/api/users/:id HTTP/1.1
+DELETE http://localhost:3000/api/users/ HTTP/1.1
 
 ### Teste da rota POST /login
 POST http://localhost:3000/api/login
@@ -41,7 +41,7 @@ Content-Type: application/json
 }
 
 ### Teste da rota GET /tasks
-GET http://localhost:3000/api/tasks/14 HTTP/1.1
+GET http://localhost:3000/api/tasks/ HTTP/1.1
 
 ### Criar nova tarefa
 POST http://localhost:3000/api/tasks/ HTTP/1.1
@@ -58,10 +58,11 @@ Content-Type: application/json
 
 
 ### Teste da rota PUT /tasks/:id
-PUT http://localhost:3000/api/tasks/14
+PUT http://localhost:3000/api/tasks/1
 Content-Type: application/json
 
 {
+    "users_id": 1,
     "title": "Estudar Node.js Avançado",
     "description": "Estudar os módulos e rotas avançados",
     "date_creation": "2025-05-23",
