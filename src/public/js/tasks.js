@@ -10,7 +10,7 @@ async function createTask(event) {
     date_creation: new Date().toISOString(),
     date_delivery: formData.get('date_delivery'),
     status: formData.get('status'),
-    user_id: 1 // Por enquanto, vamos usar um ID fixo
+    users_id: getCurrentUserId() // Alterado de user_id para users_id
   };
   
   try {

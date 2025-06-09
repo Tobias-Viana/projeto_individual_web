@@ -2,8 +2,13 @@ const svc = require('../services/taskService');
 
 exports.create = async (req, res) => {
   try {
-    console.log(req.body);
     const { users_id, title, description, date_creation, date_delivery, status } = req.body;
+    
+    // Validação adicional do users_id
+    if (!users_id) {
+      return res.status(400).json({ error: "ID do usuário é obrigatório" });
+    }
+    
     const task = await svc.createTask(users_id, title, description, date_creation, date_delivery, status);
     res.status(201).json(task);
   } catch (e) {

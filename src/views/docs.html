@@ -77,11 +77,11 @@
 
       <h2>2. Tasks</h2>
       <ul>
-        <li><strong>GET /task</strong> – lista todas as tarefas.</li>
-        <li><strong>POST /task</strong> – cria uma tarefa.<br />
+        <li><strong>GET /tasks</strong> – lista todas as tarefas.</li>
+        <li><strong>POST /tasks</strong> – cria uma tarefa.<br />
           Exemplo de corpo:<br />
           <code>{
-      "user_id": 1,
+      "users_id": 1,
       "title": "Estudar Node.js",
       "description": "Estudar os módulos e rotas",
       "date_creation": "2025-05-23",
@@ -89,8 +89,8 @@
       "status": "pendente"
     }</code>
         </li>
-        <li><strong>PUT /task/:id</strong> – atualiza título, descrição e status da tarefa.</li>
-        <li><strong>DELETE /task/:id</strong> – exclui tarefa.</li>
+        <li><strong>PUT /tasks/:id</strong> – atualiza título, descrição e status da tarefa.</li>
+        <li><strong>DELETE /tasks/:id</strong> – exclui tarefa.</li>
       </ul>
 
       <h2>3. Categories</h2>

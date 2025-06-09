@@ -6,8 +6,8 @@ const createTask = async (users_id, title, description, date_creation, date_deli
   const userId = parseInt(users_id, 10);
   if (isNaN(userId)) throw new Error("ID de usuário inválido");
   
-  const users = await userRepo.findById(userId);
-  if (!users) throw new Error("Usuário não encontrado");
+  const user = await userRepo.findById(userId);
+  if (!user) throw new Error("Usuário não encontrado");
   
   const { error } = model.validate({ users_id: userId, title, description, date_creation, date_delivery, status });
   if (error) throw new Error(error.details[0].message);

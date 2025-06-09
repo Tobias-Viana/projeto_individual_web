@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const t = require('../controllers/taskController');
+const taskController = require('../controllers/taskController');
+const router = Router();
 
-const r = Router();
+// Padronizar todas as rotas para /tasks
+router.post('/tasks', taskController.create);
+router.get('/tasks', taskController.list);
+router.get('/tasks/:id', taskController.detail);
+router.put('/tasks/:id', taskController.update);
+router.delete('/tasks/:id', taskController.remove);
 
-r.post('/tasks', t.create);         
-r.get('/tasks', t.list);            
-r.get('/tasks/:id', t.detail);      
-r.put('/tasks/:id', t.update);      
-r.delete('/tasks/:id', t.remove);   
-
-module.exports = r;
+module.exports = router;

@@ -45,6 +45,13 @@ app.get("/docs", (_, res) =>
   res.sendFile(path.join(__dirname, "views", "docs.html"))
 );
 
+// Adicionar middleware para validação de usuário
+app.use("/api", (req, res, next) => {
+  // Aqui você pode adicionar a lógica de autenticação
+  // Por exemplo, verificar um token JWT ou sessão
+  next();
+});
+
 // Registra rotas de API
 app.use("/api", require("./routes/userRoutes"));
 app.use("/api", require("./routes/taskRoutes"));
