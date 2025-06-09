@@ -1,4 +1,7 @@
-// Função para criar uma nova tarefa
+function getCurrentUserId() {
+  return 1;
+}
+
 async function createTask(event) {
   event.preventDefault();
   
@@ -10,7 +13,7 @@ async function createTask(event) {
     date_creation: new Date().toISOString(),
     date_delivery: formData.get('date_delivery'),
     status: formData.get('status'),
-    users_id: getCurrentUserId() // Alterado de user_id para users_id
+    users_id: getCurrentUserId()
   };
   
   try {
@@ -32,11 +35,11 @@ async function createTask(event) {
       showAlert('error', data.error || 'Erro ao criar tarefa');
     }
   } catch (error) {
+    console.error('Erro:', error);
     showAlert('error', 'Erro ao conectar com o servidor');
   }
 }
 
-// Função para atualizar uma tarefa
 async function updateTask(event) {
   event.preventDefault();
   
@@ -87,13 +90,11 @@ async function deleteTask(taskId) {
     
     if (response.ok) {
       showAlert('success', 'Tarefa excluída com sucesso!');
-      // Remover o elemento da tarefa da página
       const taskElement = document.getElementById(`task-${taskId}`);
       if (taskElement) {
         taskElement.remove();
       }
       
-      // Se não houver mais tarefas, mostrar mensagem
       const taskList = document.querySelector('.task-list');
       if (taskList && taskList.children.length === 0) {
         taskList.innerHTML = '<p>Nenhuma tarefa encontrada.</p>';
@@ -107,7 +108,6 @@ async function deleteTask(taskId) {
   }
 }
 
-// Função para mostrar alertas
 function showAlert(type, message) {
   const alertContainer = document.getElementById('alert-container');
   if (!alertContainer) return;
@@ -119,7 +119,6 @@ function showAlert(type, message) {
   alertContainer.innerHTML = '';
   alertContainer.appendChild(alertDiv);
   
-  // Remover alerta após 3 segundos
   setTimeout(() => {
     alertDiv.remove();
   }, 3000);

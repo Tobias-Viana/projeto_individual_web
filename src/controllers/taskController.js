@@ -2,6 +2,7 @@ const svc = require('../services/taskService');
 
 exports.create = async (req, res) => {
   try {
+    console.log('Dados recebidos:', req.body);
     const { users_id, title, description, date_creation, date_delivery, status } = req.body;
     
     // Validação adicional do users_id
@@ -10,8 +11,10 @@ exports.create = async (req, res) => {
     }
     
     const task = await svc.createTask(users_id, title, description, date_creation, date_delivery, status);
+    console.log('Tarefa criada:', task);
     res.status(201).json(task);
   } catch (e) {
+    console.error('Erro ao criar tarefa:', e);
     res.status(400).json({ error: e.message });
   }
 };
