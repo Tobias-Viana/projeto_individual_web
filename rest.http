@@ -44,15 +44,15 @@ Content-Type: application/json
 GET http://localhost:3000/api/tasks/ HTTP/1.1
 
 ### Criar nova tarefa
-POST http://localhost:3000/api/tasks/ HTTP/1.1
+POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
-  "user_id": 1,
-  "title": "Minha task teste",
-  "description": "Descrição da task",
-  "date_creation": "2025-05-25",
-  "date_delivery": "2025-05-30",
+  "users_id": 15,
+  "title": "Tarefa de teste",
+  "description": "Esta é uma tarefa de teste",
+  "date_creation": "2025-06-15T16:13:32.378Z",
+  "date_delivery": "2025-06-30",
   "status": "pendente"
 }
 
@@ -72,6 +72,9 @@ Content-Type: application/json
 
 ### Teste da rota DELETE /tasks/:id
 DELETE http://localhost:3000/api/tasks/14 HTTP/1.1
+
+### Listar todas as tarefas
+GET http://localhost:3000/api/tasks
 
 ### Teste da rota GET /category/:id
 GET http://localhost:3000/api/category/ HTTP/1.1

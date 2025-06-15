@@ -1,109 +1,186 @@
-<h1>Gerenciador de Tarefas</h1>
-  <p>Um sistema simples de gerenciamento de tarefas (To-do list) desenvolvido com JavaScript no frontend, Node.js no backend e banco de dados PostgreSQL via Supabase.</p>
-  <h2>Funcionalidades</h2>
-  <ul>
-    <li>Criar, ler, atualizar e deletar tarefas</li>
-    <li>Marcar tarefas como concluídas ou pendentes</li>
-    <li>Filtrar tarefas por status</li>
-    <li>Autenticação de usuários com Supabase</li>
-  </ul>
-  <h2>Tecnologias Utilizadas</h2>
-  <ul>
-    <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
-    <li><strong>Backend:</strong> Node.js (Express)</li>
-    <li><strong>Banco de Dados:</strong> PostgreSQL (via <a href="https://supabase.io" target="_blank">Supabase</a>)</li>
-    <li><strong>Hospedagem/Serviços:</strong> Supabase Auth e Supabase DB</li>
-  </ul>
+# 📋 Gerenciador de Tarefas
 
-## Estrutura de Pastas
+Um sistema completo de gerenciamento de tarefas com interface moderna, sistema de categorias e autenticação de usuários. Desenvolvido com Node.js, Express e PostgreSQL.
 
-| Pasta/Arquivo            | Conteúdo                                |
-|--------------------------|-----------------------------------------|
-| **assets/**              | Arquivo estáticos                       |
-| └── diagrama_de_dados.png| Diagrama do banco de dados              |
-| **documentos/**          | Documentação adicional                  |
-| └── wad.md               | Documentação do projeto                 |
-| **src/**                 | Source code                             |
-| **config/**              | Arquivos de configuração                |
-| └── db.js                | Conexão com o banco                     |
-| **controllers/**         | Lógica de controle das requisições      |
-| └── categoryController.js| Lógica de controle de categorias        |
-| └── taskController.js    | Lógica de controle de tarefas           |
-| └── userController.js    | Lógica de controle de usuários          |
-| **models/**              | Modelos de dados                        |
-| └── categoryModels.js    | Modelo de dados de categorias           |
-| └── taskModels.js        | Modelo de dados de tarefas              |
-| └── userModels.js        | Modelo de dados de usuários             |
-| **repositories/**        | Repositório de dados                    |
-| └── categoryRepository.js| Repositório de dados de categorias      |
-| └── taskRepository.js    | Repositório de dados de tarefas         |
-| └── userRepository.js    | Repositório de dados de usuários        |
-| **routes/**              | Definição das rotas do sistema          |
-| └── categoryRoutes.js    | Rotas de categorias                     |
-| └── index.js             | Index de todas as rotas                 |
-| └── taskRoutes.js        | Rotas de tarefas                        |
-| └── userRoutes.js        | Rotas de usuários                       |
-| **scripts/**             | Arquivos de JavaScript públicos         |
-| └── init.sql             | Modelo físico                           |
-| └── runSQLScript.js      | Executa comandos SQL                    |
-| **services/**            | Serviços auxiliares do sistema          |
-| └── categoryService.js   | Serviços relacionados as categorias     |
-| └── taskService.js       | Serviços relacionados as tarefas        |
-| └── userService.js       | Serviços relacionados aos usuários      |
-| **views/**               | Renderização de páginas HTML            |
-| └── docs.html            | Documentação HTML dos API               |
-| **server.js**            | Arquivo principal do servidor           |
-| .env.example             | Arquivo de exemplo das variáveis        |
-| .gitignore               | Arquivo para ignorar arquivos no Git    |
-| jest.config.js           | Arquivo de configuração do Jest         |
-| package-lock.json        | Gerenciador de dependências do Node.js  |
-| package.json             | Gerenciador de dependências do Node.js  |
-| readme.md                | Documentação do projeto (Markdown)      |
-| rest.http                | Teste de endpoints (opcional)           |
+![Gerenciador de Tarefas](assets/diagrama_de_dados.png)
 
-<h2>Como Rodar o Projeto Localmente</h2>
+## ✨ Funcionalidades
 
-1- **Clone o repositório**:
+### 🔐 Autenticação
+- **Login/Cadastro Unificado**: Interface moderna com abas para login e registro
+- **Autenticação Segura**: Sistema de hash de senhas com bcrypt
+- **Sessão Persistente**: Dados do usuário salvos no localStorage
+- **Validação de Email**: Domínios permitidos para maior segurança
+
+### 📝 Gerenciamento de Tarefas
+- **CRUD Completo**: Criar, visualizar, editar e excluir tarefas
+- **Status Dinâmico**: Pendente, Em Andamento, Concluída
+- **Data de Entrega**: Controle de prazos das tarefas
+- **Filtro por Usuário**: Cada usuário vê apenas suas próprias tarefas
+- **Interface Responsiva**: Design adaptável para diferentes dispositivos
+
+### 🏷️ Sistema de Categorias
+- **Categorias Personalizadas**: Crie suas próprias categorias
+- **Cores Customizáveis**: Seletor de cor para organização visual
+- **Gerenciamento Completo**: Criar, editar e excluir categorias
+- **Categorias Padrão**: Trabalho, Pessoal e Estudos pré-configuradas
+- **Associação com Tarefas**: Vincule tarefas às categorias
+
+### 🎨 Design Moderno
+- **Glassmorphism**: Efeitos de vidro com blur e transparência
+- **Degradê Azul**: Fundo com gradiente de azul escuro para claro
+- **Animações Suaves**: Transições e efeitos hover elegantes
+- **Cards Interativos**: Interface intuitiva com feedback visual
+
+## 🛠️ Tecnologias Utilizadas
+
+### Frontend
+- **HTML5**: Estrutura semântica
+- **CSS3**: Estilização moderna com glassmorphism
+- **JavaScript ES6+**: Funcionalidades interativas
+- **EJS**: Template engine para renderização
+
+### Backend
+- **Node.js**: Runtime JavaScript
+- **Express.js**: Framework web minimalista
+- **Joi**: Validação de dados
+- **bcrypt**: Hash de senhas
+
+### Banco de Dados
+- **PostgreSQL**: Banco relacional robusto
+- **Supabase**: Plataforma de banco como serviço
+
+### Arquitetura
+- **MVC Pattern**: Separação clara de responsabilidades
+- **Repository Pattern**: Abstração da camada de dados
+- **Service Layer**: Lógica de negócio centralizada
+
+## 📁 Estrutura do Projeto
+
+```
+gerenciador-de-tarefas/
+├── 📁 assets/
+│   └── diagrama_de_dados.png          # Diagrama do banco de dados
+├── 📁 src/                             # Código fonte principal
+│   ├── 📁 config/
+│   │   └── db.js                       # Configuração do banco de dados
+│   ├── 📁 controllers/                 # Controladores (lógica de requisições)
+│   │   ├── categoryController.js       # Controle de categorias antigas
+│   │   ├── taskController.js           # Controle de tarefas
+│   │   ├── taskCategoryController.js   # Controle de categorias de tarefas
+│   │   └── userController.js           # Controle de usuários
+│   ├── 📁 middleware/
+│   │   └── auth.js                     # Middleware de autenticação
+│   ├── 📁 models/                      # Modelos de validação (Joi)
+│   │   ├── categoryModels.js           # Validação de categorias antigas
+│   │   ├── taskCategoryModels.js       # Validação de categorias de tarefas
+│   │   ├── taskModels.js               # Validação de tarefas
+│   │   └── userModels.js               # Validação de usuários
+│   ├── 📁 public/                      # Arquivos estáticos
+│   │   ├── 📁 css/
+│   │   │   └── style.css               # Estilos principais
+│   │   └── 📁 js/
+│   │       ├── auth.js                 # JavaScript de autenticação
+│   │       ├── categories.js           # JavaScript de categorias
+│   │       └── tasks.js                # JavaScript de tarefas
+│   ├── 📁 repositories/                # Camada de acesso a dados
+│   │   ├── categoryRepository.js       # Repositório de categorias antigas
+│   │   ├── taskCategoryRepository.js   # Repositório de categorias de tarefas
+│   │   ├── taskRepository.js           # Repositório de tarefas
+│   │   └── userRepository.js           # Repositório de usuários
+│   ├── 📁 routes/                      # Definição de rotas
+│   │   ├── categoryRoutes.js           # Rotas de categorias antigas
+│   │   ├── taskCategoryRoutes.js       # Rotas de categorias de tarefas
+│   │   ├── taskRoutes.js               # Rotas de tarefas
+│   │   └── userRoutes.js               # Rotas de usuários
+│   ├── 📁 scripts/                     # Scripts utilitários
+│   │   ├── add-categories.sql          # SQL para criar categorias
+│   │   ├── create-test-user.js         # Script para criar usuário teste
+│   │   ├── init.sql                    # Estrutura inicial do banco
+│   │   ├── runSQLScript.js             # Executor de scripts SQL
+│   │   └── setup-categories.js         # Configuração de categorias
+│   ├── 📁 services/                    # Lógica de negócio
+│   │   ├── categoryService.js          # Serviços de categorias antigas
+│   │   ├── taskCategoryService.js      # Serviços de categorias de tarefas
+│   │   ├── taskService.js              # Serviços de tarefas
+│   │   └── userService.js              # Serviços de usuários
+│   ├── 📁 views/                       # Templates EJS
+│   │   ├── 404.ejs                     # Página de erro 404
+│   │   ├── categories.ejs              # Página de categorias
+│   │   ├── create-task.ejs             # Página de criação de tarefas
+│   │   ├── edit-task.ejs               # Página de edição de tarefas
+│   │   ├── index.ejs                   # Página inicial
+│   │   ├── login.ejs                   # Página de login/cadastro
+│   │   └── tasks.ejs                   # Página de tarefas
+│   ├── package.json                    # Dependências do projeto
+│   └── server.js                       # Servidor principal
+├── .env.example                        # Exemplo de variáveis de ambiente
+├── .gitignore                          # Arquivos ignorados pelo Git
+├── README.md                           # Documentação principal
+├── rest.http                           # Testes de API
+└── WAD.md                              # Documentação técnica
+```
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+- **Node.js** (versão 16 ou superior)
+- **npm** ou **yarn**
+- **Conta no Supabase** (gratuita)
+
+### 1️⃣ Clone o Repositório
 ```bash
 git clone https://github.com/Tobias-Viana/gerenciador-de-tarefas.git
 cd gerenciador-de-tarefas
 ```
-2- **Instale as dependências: Certifique-se de que você tem o Node.js instalado. Em seguida, execute:**
+
+### 2️⃣ Instale as Dependências
 ```bash
+cd src
 npm install
 ```
-3- **Configure as variáveis de ambiente: Crie um arquivo .env na raiz do projeto com base no .env.example e preencha com os dados do Supabase, como o exemplo abaixo:**
-```bash
-DB_USER= "seu_usuario"
-DB_HOST= "seu_host"
-DB_DATABASE= "seu_banco"
-DB_PASSWORD= "sua_senha"
-DB_PORT= "sua_porta"
-DB_SSL= "true"
-PORT= 3000
+
+### 3️⃣ Configure o Banco de Dados
+
+#### Configuração do Supabase
+1. Acesse [supabase.com](https://supabase.com) e crie uma conta
+2. Crie um novo projeto
+3. Vá em **Settings** → **Database** e copie as informações de conexão
+
+#### Variáveis de Ambiente
+Crie um arquivo `.env` na pasta raiz do projeto:
+```env
+# Configurações do Banco de Dados (Supabase)
+DB_HOST=aws-0-sa-east-1.pooler.supabase.com
+DB_PORT=6543
+DB_USER=postgres.tvhrbowrkhmsnoyunzwx
+DB_DATABASE=postgres
+DB_PASSWORD=sua_senha_aqui
+DB_SSL=true
+
+# Configurações do Servidor
+PORT=3000
+
+# JWT Secret (opcional)
+JWT_SECRET=seu_jwt_secret_aqui
 ```
-4- **Execute o script de inicialização do banco de dados: Verifique se o banco está configurado e rodando. Depois, execute:**
+
+### 4️⃣ Configure o Banco de Dados
 ```bash
+# Execute o script de inicialização
 node scripts/runSQLScript.js
+
+# Configure as categorias de tarefas
+node scripts/setup-categories.js
 ```
-5- **Inicie o servidor: Execute o comando abaixo para iniciar o servidor:**
+
+### 5️⃣ Inicie o Servidor
 ```bash
 npm start
 ```
-6- **Acesse a aplicação: Abra o navegador e acesse:**
-```bash
+
+### 6️⃣ Acesse a Aplicação
+Abra seu navegador e acesse:
+```
 http://localhost:3000
-```
-7- **Testes (opcional): Para rodar os testes, execute:**
-```bash
-npm test
-```
-8- **Use uma ferramenta como o Postman ou Insomnia para testar os endpoints da API. Você também pode testar diretamente com o arquivo rest.http incluso no projeto. Basta abrir esse arquivo com o VS Code (e a extensão REST Client instalada), e clicar em “Send Request” nos blocos.**
-```bash
-POST /api/users — Criar usuário
-POST /api/login — Fazer login
-POST /api/tasks — Criar nova tarefa
-GET /api/tasks — Listar tarefas
-PUT /api/tasks/:id — Atualizar tarefa
-DELETE /api/tasks/:id — Deletar tarefa
 ```
