@@ -1,31 +1,35 @@
--- Creating the user tables, task, category, and task_categories tables
+
 CREATE TABLE IF NOT EXISTS users (
-id SERIAL PRIMARY KEY,
-name VARCHAR(100) NOT NULL,
-email VARCHAR(100) UNIQUE NOT NULL,
-password VARCHAR(255) NOT NULL
-);
-CREATE TABLE IF NOT EXISTS task (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(200) NOT NULL,
-  description TEXT,
-  date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  date_delivery TIMESTAMP NOT NULL,
-  status VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'em andamento', 'concluída')),
-  users_id INTEGER NOT NULL,
-  FOREIGN KEY (users_id) REFERENCES users(id)
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS category (
+CREATE TABLE IF NOT EXISTS tasks (
+  id SERIAL PRIMARY KEY,
+  users_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(100) NOT NULL,
+  description TEXT,
+  date_creation TIMESTAMP NOT NULL,
+  date_delivery TIMESTAMP NOT NULL,
+  status VARCHAR(20) NOT NULL CHECK (status IN ('pendente', 'em andamento', 'concluída')),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS categories (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  description TEXT
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS task_categories(
-  task_id INTEGER NOT NULL,
-  category_id INTEGER NOT NULL,
-  PRIMARY KEY (task_id, category_id),
-  FOREIGN KEY (task_id) REFERENCES task(id),
-  FOREIGN KEY (category_id) REFERENCES category(id)
+CREATE TABLE IF NOT EXISTS task_categories (
+  task_id INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+  category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  PRIMARY KEY (task_id, category_id)
 );
+
+INSERT INTO categories (name) 
+VALUES ('Trabalho'), ('Estudo'), ('Pessoal'), ('Urgente'), ('Projeto')
+ON CONFLICT DO NOTHING;

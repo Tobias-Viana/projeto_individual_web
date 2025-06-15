@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const u = require('../controllers/userController');
-
 const r = Router();
 
 r.get('/users', u.list);

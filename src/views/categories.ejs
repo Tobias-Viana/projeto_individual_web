@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorias - Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Gerenciador de Tarefas</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/tasks">Tarefas</a></li>
+          <li><a href="/tasks/create">Nova Tarefa</a></li>
+          <li class="user-info">
+            <span id="user-name"></span>
+            <button onclick="logout()" class="btn btn-sm">Sair</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div id="alert-container"></div>
+    
+    <div class="page-header">
+      <h2>Categorias</h2>
+      <button onclick="showCategoryForm()" class="btn btn-success">Nova Categoria</button>
+    </div>
+    
+    <div id="category-form-container" style="display: none;">
+      <div class="card">
+        <h3>Nova Categoria</h3>
+        <form id="category-form" onsubmit="createCategory(event)">
+          <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" class="form-control" required maxlength="50" placeholder="Nome da categoria">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descrição opcional da categoria"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="color">Cor</label>
+            <div class="color-input-container">
+              <input type="color" id="color" name="color" class="form-control color-picker" value="#3b82f6">
+              <span class="color-preview" style="background-color: #3b82f6;"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" onclick="hideCategoryForm()" class="btn">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="dashboard-grid">
+      <p>Carregando categorias...</p>
+    </div>
+  </main>
+  
+  <script src="/js/auth.js"></script>
+  <script src="/js/categories.js"></script>
+</body>
+</html>

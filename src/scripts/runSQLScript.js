@@ -1,31 +1,41 @@
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require('pg');
-require('dotenv').config();
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const { pool } = require('../config/db');
 
 const runSQLScript = async () => {
   const filePath = path.join(__dirname, 'init.sql');
   const sql = fs.readFileSync(filePath, 'utf8');
 
+  console.log('Iniciando execução do script SQL no Supabase...');
+  console.log('Isso pode levar alguns minutos dependendo da complexidade do script.');
+
   try {
-    await pool.query(sql);
+    const commands = sql.split(';').filter(cmd => cmd.trim() !== '');
+    for (let i = 0; i < commands.length; i++) {
+      const command = commands[i].trim();
+      if (command) {
+        try {
+          await pool.query(command + ';');
+          console.log(`Comando ${i+1}/${commands.length} executado com sucesso.`);
+        } catch (cmdErr) {
+          console.error(`Erro ao executar comando ${i+1}/${commands.length}:`, cmdErr.message);
+          console.log('Comando com erro:', command);
+        }
+      }
+    }
+    
     console.log('Script SQL executado com sucesso!');
   } catch (err) {
     console.error('Erro ao executar o script SQL:', err);
   } finally {
-    await pool.end();
+    console.log('Operação concluída.');
   }
 };
 
-runSQLScript(); 
+if (require.main === module) {
+  runSQLScript().then(() => {
+    pool.end();
+  });
+} else {
+  module.exports = runSQLScript;
+}

@@ -1,52 +1,87 @@
 const db = require('../config/db');
-const schema = require('../models/userModels');
-const bcrypt = require('bcrypt');
 
-const SALT_ROUNDS = 10;
-
-function validate(users) {
-  const { error, value } = schema.validate(users);
-  if (error) throw error;
-  return value;
-}
-
-module.exports = {
-  async create(users) {
-    users = validate(users);
-    const hashedPassword = await bcrypt.hash(users.password, SALT_ROUNDS);
+const create = async (userData) => {
+  try {
     const result = await db.query(
       'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email',
-      [users.name, users.email, hashedPassword]
+      [userData.name, userData.email, userData.password]
     );
     return result.rows[0];
-  },
+  } catch (error) {
+    console.error('Erro ao criar usuário:', error);
+    throw error;
+  }
+};
 
-  async findAll() {
-    const result = await db.query('SELECT id, name, email FROM users');
-    return result.rows;
-  },
+const findByEmailWithPassword = async (email) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Erro ao buscar usuário por email com senha:', error);
+    throw error;
+  }
+};
 
-  async findById(id) {
+const findByEmail = async (email) => {
+  try {
+    const result = await db.query('SELECT id, name, email FROM users WHERE email = $1', [email]);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Erro ao buscar usuário por email:', error);
+    throw error;
+  }
+};
+
+const findById = async (id) => {
+  try {
     const result = await db.query('SELECT id, name, email FROM users WHERE id = $1', [id]);
     return result.rows[0];
-  },
+  } catch (error) {
+    console.error('Erro ao buscar usuário por ID:', error);
+    throw error;
+  }
+};
 
-  async update(id, users) {
-    users = validate(users);
+const getAllUsers = async () => {
+  try {
+    const result = await db.query('SELECT id, name, email FROM users');
+    return result.rows;
+  } catch (error) {
+    console.error('Erro ao buscar todos os usuários:', error);
+    throw error;
+  }
+};
+
+const updateUser = async (id, name, email) => {
+  try {
     const result = await db.query(
       'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name, email',
-      [users.name, users.email, id]
+      [name, email, id]
     );
     return result.rows[0];
-  },
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    throw error;
+  }
+};
 
-  async remove(id) {
-    const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING id, name, email', [id]);
+const deleteUser = async (id) => {
+  try {
+    const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);
     return result.rows[0];
-  },
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);
+    throw error;
+  }
+};
 
-  async findByEmailWithPassword(email) {
-    const result = await db.query('SELECT id, name, email, password FROM users WHERE email = $1', [email]);
-    return result.rows[0];
-  },
+module.exports = {
+  create,
+  findByEmailWithPassword,
+  findByEmail,
+  findById,
+  getAllUsers,
+  updateUser,
+  deleteUser
 };

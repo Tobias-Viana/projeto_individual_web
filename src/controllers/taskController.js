@@ -1,57 +1,95 @@
-const svc = require('../services/taskService');
+const taskService = require('../services/taskService');
 
 exports.create = async (req, res) => {
   try {
+    const { users_id, title, description, date_creation, date_delivery, status, category_id } = req.body;
+
     console.log('Dados recebidos:', req.body);
-    const { users_id, title, description, date_creation, date_delivery, status } = req.body;
-    
-    // Validação adicional do users_id
-    if (!users_id) {
-      return res.status(400).json({ error: "ID do usuário é obrigatório" });
+
+    if (!users_id || !title || !date_creation || !date_delivery || !status) {
+      return res.status(400).json({ error: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    
-    const task = await svc.createTask(users_id, title, description, date_creation, date_delivery, status);
-    console.log('Tarefa criada:', task);
+
+    const task = await taskService.createTask(
+      users_id,
+      title,
+      description,
+      date_creation,
+      date_delivery,
+      status,
+      category_id
+    );
+
     res.status(201).json(task);
-  } catch (e) {
-    console.error('Erro ao criar tarefa:', e);
-    res.status(400).json({ error: e.message });
+  } catch (error) {
+    console.error('Erro ao criar tarefa:', error);
+    res.status(400).json({ error: error.message });
   }
 };
 
-exports.list = async (_, res) => {
+exports.list = async (req, res) => {
   try {
-    const tasks = await svc.getAllTasks();
+    const tasks = await taskService.getAllTasks();
     res.json(tasks);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+  } catch (error) {
+    console.error('Erro ao listar tarefas:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.listByUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const tasks = await taskService.getTasksByUserId(userId);
+    res.json(tasks);
+  } catch (error) {
+    console.error('Erro ao listar tarefas do usuário:', error);
+    res.status(500).json({ error: error.message });
   }
 };
 
 exports.detail = async (req, res) => {
   try {
-    const task = await svc.getTaskById(req.params.id);
-    task ? res.json(task) : res.status(404).json({ error: "Tarefa não encontrada" });
-  } catch (e) {
-    res.status(400).json({ error: e.message });
+    const task = await taskService.getTaskById(req.params.id);
+    if (!task) {
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+    res.json(task);
+  } catch (error) {
+    console.error('Erro ao buscar tarefa:', error);
+    res.status(400).json({ error: error.message });
   }
 };
 
 exports.update = async (req, res) => {
   try {
-    const { title, description, status } = req.body;
-    const updated = await svc.updateTask(req.params.id, title, description, status);
-    updated ? res.json(updated) : res.status(404).json({ error: "Tarefa não encontrada" });
-  } catch (e) {
-    res.status(400).json({ error: e.message });
+    const { title, description, status, date_delivery, category_id } = req.body;
+    if (!title || !status) {
+      return res.status(400).json({ error: "Título e status são obrigatórios" });
+    }
+
+    const task = await taskService.updateTask(req.params.id, title, description, status, date_delivery, category_id);
+    if (!task) {
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+
+    res.json(task);
+  } catch (error) {
+    console.error('Erro ao atualizar tarefa:', error);
+    res.status(400).json({ error: error.message });
   }
 };
 
-exports.remove = async (req, res) => {
+exports.delete = async (req, res) => {
   try {
-    const deleted = await svc.deleteTask(req.params.id);
-    deleted ? res.status(204).send() : res.status(404).json({ error: "Tarefa não encontrada" });
-  } catch (e) {
-    res.status(400).json({ error: e.message });
+    const task = await taskService.deleteTask(req.params.id);
+    if (!task) {
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+    
+    res.json({ message: "Tarefa excluída com sucesso" });
+  } catch (error) {
+    console.error('Erro ao excluir tarefa:', error);
+    res.status(400).json({ error: error.message });
   }
 };

@@ -1,18 +1,15 @@
 const db = require('../config/db');
 
-// Pega todas as categorias
 const listCategories = async () => {
   const result = await db.query('SELECT id, name, description FROM category');
   return result.rows;
 };
 
-// Pega categoria por ID
 const getCategoryById = async (id) => {
   const result = await db.query('SELECT id, name, description FROM category WHERE id = $1', [id]);
   return result.rows[0];
 };
 
-// Cria nova categoria
 const createCategory = async (name, description) => {
   const result = await db.query(
     'INSERT INTO category (name, description) VALUES ($1, $2) RETURNING id, name, description',
@@ -21,7 +18,6 @@ const createCategory = async (name, description) => {
   return result.rows[0];
 };
 
-// Atualiza categoria pelo ID
 const updateCategory = async (id, name, description) => {
   const result = await db.query(
     'UPDATE category SET name = $1, description = $2 WHERE id = $3 RETURNING id, name, description',
@@ -30,7 +26,6 @@ const updateCategory = async (id, name, description) => {
   return result.rows[0];
 };
 
-// Deleta categoria pelo ID
 const deleteCategory = async (id) => {
   const result = await db.query(
     'DELETE FROM category WHERE id = $1 RETURNING id, name, description',

@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const c = require('../controllers/categoryController');
-
 const r = Router();
 
 r.post('/category', c.createCategory);

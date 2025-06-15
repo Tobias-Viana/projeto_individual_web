@@ -4,12 +4,15 @@ const svc = require('../services/userService');
 exports.create = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!password) throw new Error("Senha é obrigatória");
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Nome, email e senha são obrigatórios" });
+    }
     
     const users = await svc.create({ name, email, password });
     
     res.status(201).json(users);
   } catch (e) {
+    console.error('Erro ao criar usuário:', e);
     res.status(400).json({ error: e.message });
   }
 };
@@ -44,11 +47,18 @@ exports.remove = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) throw new Error('Email e senha são obrigatórios');
-    const users = await svc.verifyUserPassword(email, password);
-    if (!users) return res.status(401).json({ error: 'Email ou senha inválidos' });
-    res.status(200).json({ message: 'Login realizado com sucesso', users });
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email e senha são obrigatórios' });
+    }
+    
+    const result = await svc.authenticate(email, password);
+    if (!result) {
+      return res.status(401).json({ error: 'Email ou senha inválidos' });
+    }
+    
+    res.status(200).json(result);
   } catch (e) {
+    console.error('Erro no login:', e);
     res.status(400).json({ error: e.message });
   }
 };

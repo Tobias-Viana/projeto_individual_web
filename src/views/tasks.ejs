@@ -14,7 +14,11 @@
         <ul>
           <li><a href="/">Início</a></li>
           <li><a href="/tasks">Tarefas</a></li>
-          <li><a href="/docs">Documentação</a></li>
+          <li><a href="/tasks/create">Nova Tarefa</a></li>
+          <li class="user-info">
+            <span id="user-name"></span>
+            <button onclick="logout()" class="btn btn-sm">Sair</button>
+          </li>
         </ul>
       </nav>
     </div>
@@ -50,6 +54,7 @@
     </div>
   </main>
   
+  <script src="/js/auth.js"></script>
   <script src="/js/tasks.js"></script>
 </body>
 </html>
