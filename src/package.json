@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.15.6"
+  },
+  "name": "projeto_individual",
+  "version": "1.0.0",
+  "main": "server.js",
+  "directories": {
+    "test": "tests",
+
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+    }
+  },
+  "scripts": {
+    "dev": "node src/server.js",
+     "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tobias-Viana/Projeto_Individual.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tobias-Viana/Projeto_Individual/issues"
+  },
+  "homepage": "https://github.com/Tobias-Viana/Projeto_Individual#readme",
+  "description": ""
+}
