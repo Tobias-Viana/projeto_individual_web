@@ -184,3 +184,105 @@ Abra seu navegador e acesse:
 ```
 http://localhost:3000
 ```
+
+## 🔗 API Endpoints
+
+### Autenticação
+```http
+POST /api/users          # Criar usuário
+POST /api/login          # Fazer login
+```
+
+### Tarefas
+```http
+GET    /api/tasks/user/:userId    # Listar tarefas do usuário
+POST   /api/tasks                 # Criar tarefa
+GET    /api/tasks/:id             # Buscar tarefa específica
+PUT    /api/tasks/:id             # Atualizar tarefa
+DELETE /api/tasks/:id             # Excluir tarefa
+```
+
+### Categorias
+```http
+GET    /api/task-categories/user/:userId    # Listar categorias do usuário
+POST   /api/task-categories                 # Criar categoria
+GET    /api/task-categories/:id             # Buscar categoria específica
+PUT    /api/task-categories/:id             # Atualizar categoria
+DELETE /api/task-categories/:id             # Excluir categoria
+```
+
+## 🧪 Testando a API
+
+Use o arquivo `rest.http` incluído no projeto com a extensão **REST Client** do VS Code:
+
+```http
+### Criar usuário
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@exemplo.com",
+  "password": "123456"
+}
+
+### Fazer login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email": "joao@exemplo.com",
+  "password": "123456"
+}
+```
+
+## 🎥 Demonstração
+
+> **Nota**: Adicione aqui o link para o vídeo de demonstração quando estiver disponível.
+
+[🎬 Vídeo de Demonstração](link-para-o-video)
+
+## 📸 Screenshots
+
+> **Nota**: Adicione aqui screenshots da interface quando estiverem disponíveis.
+
+### Tela de Login
+![Login](screenshots/login.png)
+
+### Dashboard Principal
+![Dashboard](screenshots/dashboard.png)
+
+### Gerenciamento de Tarefas
+![Tarefas](screenshots/tasks.png)
+
+### Gerenciamento de Categorias
+![Categorias](screenshots/categories.png)
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Tobias Viana**
+- GitHub: [@Tobias-Viana](https://github.com/Tobias-Viana)
+- LinkedIn: [Tobias Viana](https://linkedin.com/in/tobias-viana)
+
+## 📞 Suporte
+
+Se você encontrar algum problema ou tiver dúvidas, por favor:
+1. Verifique se seguiu todos os passos de instalação
+2. Consulte a documentação técnica em [WAD.md](WAD.md)
+3. Abra uma [issue](https://github.com/Tobias-Viana/gerenciador-de-tarefas/issues) no GitHub
+
+---
+
+⭐ **Se este projeto te ajudou, considere dar uma estrela no repositório!**
