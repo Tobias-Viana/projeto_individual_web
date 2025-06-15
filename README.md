@@ -60,7 +60,14 @@ Um sistema completo de gerenciamento de tarefas com interface moderna, sistema d
 ```
 gerenciador-de-tarefas/
 ├── 📁 assets/
+│   ├── 📁 screenshots/
+│   │   ├── login.png                   # Tela de login
+│   │   ├── dashboard.png               # Dashboard principal
+│   │   ├── tasks.png                   # Gerenciamento de tarefas
+│   │   └── categories.png              # Gerenciamento de categorias
 │   └── diagrama_de_dados.png          # Diagrama do banco de dados
+├── 📁 documents/
+│   └── wad.md                          # Documentação técnica 
 ├── 📁 src/                             # Código fonte principal
 │   ├── 📁 config/
 │   │   └── db.js                       # Configuração do banco de dados
@@ -116,9 +123,9 @@ gerenciador-de-tarefas/
 │   └── server.js                       # Servidor principal
 ├── .env.example                        # Exemplo de variáveis de ambiente
 ├── .gitignore                          # Arquivos ignorados pelo Git
+├── LICENSE                             # Licença do projeto
 ├── README.md                           # Documentação principal
-├── rest.http                           # Testes de API
-└── WAD.md                              # Documentação técnica
+└── rest.http                           # Testes de API
 ```
 
 ## 🚀 Como Executar o Projeto

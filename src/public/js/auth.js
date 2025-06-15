@@ -1,4 +1,4 @@
-// Função para login do usuário
+
 async function loginUser(event) {
   event.preventDefault();
   
@@ -24,7 +24,6 @@ async function loginUser(event) {
     console.log('Resposta do servidor:', data);
     
     if (response.ok) {
-      // Salvar o token e ID do usuário no localStorage
       localStorage.setItem('userId', data.users.id);
       localStorage.setItem('userName', data.users.name);
       
@@ -41,7 +40,6 @@ async function loginUser(event) {
   }
 }
 
-// Função para cadastro do usuário
 async function registerUser(event) {
   event.preventDefault();
   
@@ -81,14 +79,12 @@ async function registerUser(event) {
   }
 }
 
-// Função para logout
 function logout() {
   localStorage.removeItem('userId');
   localStorage.removeItem('userName');
   window.location.href = '/login';
 }
 
-// Função para exibir alertas
 function showAlert(type, message) {
   const alertContainer = document.getElementById('alert-container');
   if (!alertContainer) return;

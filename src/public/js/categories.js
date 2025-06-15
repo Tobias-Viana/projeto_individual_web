@@ -7,7 +7,6 @@ function getCurrentUserId() {
   return parseInt(userId);
 }
 
-// Verificar autenticação ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
   const userId = getCurrentUserId();
   if (!userId && !window.location.pathname.includes('/login')) {
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  // Atualizar nome do usuário no header, se existir
   const userNameElement = document.getElementById('user-name');
   if (userNameElement) {
     const userName = localStorage.getItem('userName');
@@ -24,11 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Carregar categorias do usuário se estivermos na página de categorias
   if (window.location.pathname === '/categories' && userId) {
     loadUserCategories(userId);
 
-    // Configurar o seletor de cor
     const colorPicker = document.getElementById('color');
     const colorPreview = document.querySelector('.color-preview');
 
@@ -40,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Função para carregar categorias do usuário
 async function loadUserCategories(userId) {
   try {
     const response = await fetch(`/api/task-categories/user/${userId}`);
@@ -57,7 +52,6 @@ async function loadUserCategories(userId) {
   }
 }
 
-// Função para renderizar as categorias na página
 function renderCategories(categories) {
   const categoryGrid = document.querySelector('.dashboard-grid');
   if (!categoryGrid) return;
@@ -80,31 +74,25 @@ function renderCategories(categories) {
   `).join('');
 }
 
-// Função para mostrar o formulário de categoria
 function showCategoryForm() {
   const formContainer = document.getElementById('category-form-container');
   const form = document.getElementById('category-form');
 
-  // Limpar o formulário
   form.reset();
   form.removeAttribute('data-category-id');
 
-  // Atualizar título
   const title = formContainer.querySelector('h3');
   title.textContent = 'Nova Categoria';
 
-  // Mostrar o formulário
   formContainer.style.display = 'block';
   formContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Função para esconder o formulário de categoria
 function hideCategoryForm() {
   const formContainer = document.getElementById('category-form-container');
   formContainer.style.display = 'none';
 }
 
-// Função para criar categoria
 async function createCategory(event) {
   event.preventDefault();
 
@@ -122,7 +110,6 @@ async function createCategory(event) {
   try {
     let response;
     if (categoryId) {
-      // Editar categoria existente
       response = await fetch(`/api/task-categories/${categoryId}`, {
         method: 'PUT',
         headers: {
@@ -131,7 +118,6 @@ async function createCategory(event) {
         body: JSON.stringify(category)
       });
     } else {
-      // Criar nova categoria
       response = await fetch('/api/task-categories', {
         method: 'POST',
         headers: {
@@ -156,14 +142,12 @@ async function createCategory(event) {
   }
 }
 
-// Função para editar categoria
 async function editCategory(categoryId) {
   try {
     const response = await fetch(`/api/task-categories/${categoryId}`);
     if (response.ok) {
       const category = await response.json();
 
-      // Preencher o formulário com os dados da categoria
       const form = document.getElementById('category-form');
       const formContainer = document.getElementById('category-form-container');
 
@@ -171,7 +155,6 @@ async function editCategory(categoryId) {
       form.querySelector('#name').value = category.name;
       form.querySelector('#description').value = category.description || '';
 
-      // Se houver campo de cor, preencher
       const colorField = form.querySelector('#color');
       const colorPreview = form.querySelector('.color-preview');
       if (colorField) {
@@ -181,11 +164,9 @@ async function editCategory(categoryId) {
         }
       }
 
-      // Atualizar título
       const title = formContainer.querySelector('h3');
       title.textContent = 'Editar Categoria';
 
-      // Mostrar o formulário
       formContainer.style.display = 'block';
       formContainer.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -197,7 +178,6 @@ async function editCategory(categoryId) {
   }
 }
 
-// Função para excluir categoria
 async function deleteCategory(categoryId) {
   if (!confirm('Tem certeza que deseja excluir esta categoria? As tarefas associadas não serão excluídas, mas perderão a categoria.')) {
     return;
@@ -229,7 +209,6 @@ async function deleteCategory(categoryId) {
   }
 }
 
-// Função para exibir alertas
 function showAlert(type, message) {
   const alertContainer = document.getElementById('alert-container');
   if (!alertContainer) return;

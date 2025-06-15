@@ -7,14 +7,12 @@ function getCurrentUserId() {
   return parseInt(userId);
 }
 
-// Verificar autenticação ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
   const userId = getCurrentUserId();
   if (!userId && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/register')) {
     window.location.href = '/login';
   }
 
-  // Atualizar nome do usuário no header, se existir
   const userNameElement = document.getElementById('user-name');
   if (userNameElement) {
     const userName = localStorage.getItem('userName');
@@ -23,12 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Carregar tarefas do usuário se estivermos na página de tarefas
   if (window.location.pathname === '/tasks' && userId) {
     loadUserTasks(userId);
   }
 
-  // Carregar categorias nos formulários de tarefa
   if ((window.location.pathname === '/tasks/create' || window.location.pathname.includes('/tasks/edit/')) && userId) {
     loadCategoriesForSelect(userId);
   }
@@ -111,7 +107,6 @@ async function updateTask(event) {
   }
 }
 
-// Função para excluir uma tarefa
 async function deleteTask(taskId) {
   if (!confirm('Tem certeza que deseja excluir esta tarefa?')) {
     return;
@@ -142,7 +137,6 @@ async function deleteTask(taskId) {
   }
 }
 
-// Função para carregar tarefas do usuário
 async function loadUserTasks(userId) {
   try {
     const response = await fetch(`/api/tasks/user/${userId}`);
@@ -159,7 +153,6 @@ async function loadUserTasks(userId) {
   }
 }
 
-// Função para carregar categorias no select
 async function loadCategoriesForSelect(userId) {
   try {
     const response = await fetch(`/api/task-categories/user/${userId}`);
@@ -168,10 +161,8 @@ async function loadCategoriesForSelect(userId) {
       const categorySelect = document.getElementById('category_id');
 
       if (categorySelect) {
-        // Limpar opções existentes (exceto "Sem categoria")
         categorySelect.innerHTML = '<option value="">Sem categoria</option>';
 
-        // Adicionar categorias
         categories.forEach(category => {
           const option = document.createElement('option');
           option.value = category.id;
@@ -186,7 +177,6 @@ async function loadCategoriesForSelect(userId) {
   }
 }
 
-// Função para renderizar as tarefas na página
 function renderTasks(tasks) {
   const taskList = document.querySelector('.task-list');
   if (!taskList) return;
