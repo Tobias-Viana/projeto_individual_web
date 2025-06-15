@@ -238,25 +238,21 @@ Content-Type: application/json
 
 ## 🎥 Demonstração
 
-> **Nota**: Adicione aqui o link para o vídeo de demonstração quando estiver disponível.
-
-[🎬 Vídeo de Demonstração](link-para-o-video)
+[🎬 Vídeo de Demonstração](https://drive.google.com/file/d/1G5w_at8Gs_LN_mBlMRmamRWqCOEVEPQt/view?usp=sharing)
 
 ## 📸 Screenshots
 
-> **Nota**: Adicione aqui screenshots da interface quando estiverem disponíveis.
-
 ### Tela de Login
-![Login](screenshots/login.png)
+![Login](assets/screenshots/login.png)
 
 ### Dashboard Principal
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](assets/screenshots/dashboard.png)
 
 ### Gerenciamento de Tarefas
-![Tarefas](screenshots/tasks.png)
+![Tarefas](assets/screenshots/tasks.png)
 
 ### Gerenciamento de Categorias
-![Categorias](screenshots/categories.png)
+![Categorias](assets/screenshots/categories.png)
 
 ## 🤝 Contribuindo
 
