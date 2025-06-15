@@ -3,9 +3,7 @@ const taskService = require('../services/taskService');
 exports.create = async (req, res) => {
   try {
     const { users_id, title, description, date_creation, date_delivery, status, category_id } = req.body;
-
-    console.log('Dados recebidos:', req.body);
-
+    
     if (!users_id || !title || !date_creation || !date_delivery || !status) {
       return res.status(400).json({ error: "Todos os campos obrigatórios devem ser preenchidos" });
     }

@@ -32,7 +32,6 @@ async function validarEmailUnico(email) {
       throw new Error('Email já está em uso');
     }
   } catch (error) {
-    console.log('Usando validação em memória devido a erro de banco:', error.message);
     if (usersInMemory.some(u => u.email === email)) {
       throw new Error('Email já está em uso');
     }
@@ -50,7 +49,6 @@ module.exports = {
       payload.password = hashedPassword;
       return await userRepo.create(payload);
     } catch (error) {
-      console.log('Usando armazenamento em memória devido a erro de banco:', error.message);
       const newUser = {
         id: nextId++,
         name: payload.name,
@@ -70,7 +68,6 @@ module.exports = {
     try {
       return await userRepo.getAllUsers();
     } catch (error) {
-      console.log('Usando lista em memória devido a erro de banco:', error.message);
       return usersInMemory.map(u => ({
         id: u.id,
         name: u.name,
@@ -83,7 +80,6 @@ module.exports = {
     try {
       return await userRepo.findById(id);
     } catch (error) {
-      console.log('Usando busca em memória devido a erro de banco:', error.message);
       const user = usersInMemory.find(u => u.id === parseInt(id));
       if (!user) return null;
       
@@ -105,7 +101,6 @@ module.exports = {
     try {
       return await userRepo.update(id, payload);
     } catch (error) {
-      console.log('Usando atualização em memória devido a erro de banco:', error.message);
       const index = usersInMemory.findIndex(u => u.id === parseInt(id));
       if (index === -1) return null;
       
@@ -126,7 +121,6 @@ module.exports = {
     try {
       return await userRepo.remove(id);
     } catch (error) {
-      console.log('Usando remoção em memória devido a erro de banco:', error.message);
       const index = usersInMemory.findIndex(u => u.id === parseInt(id));
       if (index === -1) return null;
       
@@ -163,7 +157,6 @@ module.exports = {
         }
       };
     } catch (error) {
-      console.log('Usando verificação em memória devido a erro de banco:', error.message);
       const user = usersInMemory.find(u => u.email === email);
       if (!user) return null;
       

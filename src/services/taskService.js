@@ -9,7 +9,6 @@ const createTask = async (users_id, title, description, date_creation, date_deli
   try {
     const user = await userRepo.findById(userId);
     if (!user) {
-      console.log(`Usuário com ID ${userId} não encontrado no banco de dados`);
       throw new Error("Usuário não encontrado");
     }
 
@@ -18,7 +17,6 @@ const createTask = async (users_id, title, description, date_creation, date_deli
 
     return await repo.createTask(userId, title, description, date_creation, date_delivery, status, category_id);
   } catch (error) {
-    console.error(`Erro ao verificar usuário ou criar tarefa: ${error.message}`);
     throw error;
   }
 };
